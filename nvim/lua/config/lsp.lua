@@ -1,6 +1,7 @@
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("clangd")
+vim.lsp.enable("arduino_language_server")
 
 vim.diagnostic.config({
   virtual_text = {
@@ -10,15 +11,43 @@ vim.diagnostic.config({
   },
 })
 
-local lspconfig = require('lspconfig')
+-- ardunino
+vim.lsp.config("arduino_language_server", {
+  capabilities = {
+      textDocument = {
+          semanticTokens = vim.NIL,
+      },
+      workspace = {
+          semanticTokens = vim.NIL,
+      },
+  },
+
+  cmd = {
+      "arduino-language-server",
+      "-cli-config",
+      "$HOME/.arduino15/arduino-cli.yaml",
+      "-fqbn",
+      "arduino:avr:uno",
+      "-cli",
+      "arduino-cli",
+      "-clangd",
+      "clangd",
+  },
+
+  filetypes = { "arduino", "ino" },
+
+  root_dir = function(bufnr, on_dir)
+      on_dir(vim.fn.expand "%:p:h")
+  end,
+})
 
 -- c++
-lspconfig.clangd.setup({
+vim.lsp["clangd"] = {
   cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
   init_options = {
     fallbackFlags = { '-std=c++17' },
   },
-})
+}
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 vim.lsp.config('*', {
