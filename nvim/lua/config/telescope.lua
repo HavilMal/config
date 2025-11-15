@@ -5,7 +5,12 @@ require('telescope').setup {
 }
 
 local tele_built = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', tele_built.find_files, { desc = "Find Files" })
+vim.keymap.set('n', '<leader>ff',
+    function()
+        tele_built.find_files({cwd = "../"})
+    end,
+    { desc = "Find Files" }
+)
 vim.keymap.set('n', '<leader>fg', tele_built.live_grep, { desc = "Grep" })
 vim.keymap.set('n', '<leader>fb', tele_built.buffers, { desc = "Find Buffers" })
 vim.keymap.set('n', '<leader>fh', tele_built.help_tags, { desc = "Find Help" })
