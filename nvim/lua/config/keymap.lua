@@ -1,6 +1,11 @@
 vim.g.mapleader = " "
 
-vim.api.nvim_set_option("clipboard","unnamed")
+-- vim.api.nvim_set_option("clipboard","unnamed")
+
+vim.keymap.set({"n", "i", "v"}, "<C-v>", "\"*p")
+vim.keymap.set({"i", "v"}, "<C-c>", "\"*y")
+vim.keymap.set({"n" }, "<C-c>", "\"*yy")
+
 
 vim.keymap.set({"n", "v"}, "L", "$")
 vim.keymap.set({"n", "v"}, "H", "^")

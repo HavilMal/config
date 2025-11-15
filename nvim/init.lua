@@ -1,5 +1,3 @@
-vim.api.nvim_set_option("clipboard","unnamed")
-
 require("config.keymap")
 require("config.lazy")
 require("config.oil")
